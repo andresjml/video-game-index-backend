@@ -39,4 +39,4 @@ GamePlatform.create(game_id:8, platform_id:1)
 GamePlatform.create(game_id:9, platform_id:2)
 GamePlatform.create(game_id:10, platform_id:2)
 
-puts "seeding completed"
+puts "seeding completed."
