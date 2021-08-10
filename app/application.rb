@@ -83,6 +83,7 @@ class Application
       end
 
       # Game Destroy
+      
       if req.path.match(/games/) && req.delete?
         id=req.path.split('/')[2]
         game=Game.find_by_id(id)
@@ -178,6 +179,7 @@ class Application
       end
 
       # Genre Destroy
+
       if req.path.match(/genres/) && req.delete?
         id=req.path.split('/')[2]
         genre=Genre.find_by_id(id)
