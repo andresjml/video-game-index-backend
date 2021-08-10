@@ -37,6 +37,7 @@ class Application
       if game
         platforms=game.platforms
         game_resp = {
+          id: game.id,
           title: game.title,
           description: game.description,
           genre:game.genre.name,
@@ -80,7 +81,7 @@ class Application
 
     # Game Destroy
     if req.path.match(/games/) && req.delete?
-      d=req.path.split('/')[2]
+      id=req.path.split('/')[2]
       game=Game.find_by_id(id)
       if game
         game.destroy
