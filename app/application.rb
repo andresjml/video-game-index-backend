@@ -73,12 +73,31 @@ class Application
         return [
           404, 
           { 'Content-Type' => 'application/json' }, 
-          [ {error: "Could not update item in database"}.to_json ]
+          [ {error: "Somethig went wrong"}.to_json ]
+        ]
+      end
+    end
+
+    # Game Destroy
+    if req.path.match(/games/) && req.delete?
+      d=req.path.split('/')[2]
+      game=Game.find_by_id(id)
+      if game
+        game.destroy
+        return [
+          200, 
+          { 'Content-Type' => 'application/json' }, 
+          [ {message: "Game Deleted"}.to_json ]
+        ]
+      else
+        return [
+          404, 
+          { 'Content-Type' => 'application/json' }, 
+          [ {error: "Game not Found"}.to_json ]
         ]
       end
 
-    # Game Destroy
-
+    end
 
 
 
