@@ -19,11 +19,11 @@ class Application
 
     # Game Create
 
-    if req.path.match(/games/) && req.post?
+    if req.path =='/games' && req.post?
       body=JSON.parse(req.body.read)
       game=Game.create(body)
       return [
-        200, 
+        201, 
         { 'Content-Type' => 'application/json' }, 
         [ game.to_json ]
       ] 
@@ -58,7 +58,46 @@ class Application
 
     # Game Update
 
-    # Game Delete
+    if req.path.match(/games/) && req.patch?
+      id=req.path.split('/')[2]
+      game=Game.find_by_id(id)
+      body=JSON.parse(req.body.read)
+      if game
+        game.update(body)
+        return [
+          202, 
+          { 'Content-Type' => 'application/json' }, 
+          [ game.to_json ]
+        ]
+      else
+        return [
+          404, 
+          { 'Content-Type' => 'application/json' }, 
+          [ {error: "Could not update item in database"}.to_json ]
+        ]
+      end
+
+    # Game Destroy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     if req.path == '/genres' && req.get?
       genres=Genre.all
