@@ -83,7 +83,7 @@ class Application
       end
 
       # Game Destroy
-      
+
       if req.path.match(/games/) && req.delete?
         id=req.path.split('/')[2]
         game=Game.find_by_id(id)
@@ -292,6 +292,13 @@ class Application
           ]
         end
       end 
+
+      #static route to test rack
+      if req.path.match(/test/)
+        return [200, {'Content-Type'=> 'application/json'}, [{message: "Test Response!"}.to_json]]
+      else
+        res.write "Path Not Found"
+      end
     res.finish
   end
 
