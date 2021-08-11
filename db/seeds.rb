@@ -9,7 +9,7 @@ puts "seeding"
 end
 
 10.times do
-    Game.create(title:Faker::Game.title, description: Faker::Lorem.paragraph, genre_id:[1,2,3,4,5].sample)
+    Game.create(title:Faker::Game.title, description: Faker::Lorem.paragraph, genre:[1,2,3,4,5].sample)
 end
 
 

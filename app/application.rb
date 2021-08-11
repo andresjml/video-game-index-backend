@@ -12,7 +12,7 @@ class Application
       # Game Index
 
       if req.path == '/games' && req.get?
-        games=Game.all
+        games=Game.all    
         return [
           200, 
           { 'Content-Type' => 'application/json' }, 
@@ -38,13 +38,14 @@ class Application
         id=req.path.split('/')[2]
         game=Game.find_by_id(id)
         if game
-          platforms=game.platforms
+          
           game_resp = {
             id: game.id,
             title: game.title,
             description: game.description,
-            genre:game.genre.name,
-            platforms:platforms
+            genre_id:game.genre.id,
+            genre_name:game.genre.name
+            
           }
           return [
             200, 

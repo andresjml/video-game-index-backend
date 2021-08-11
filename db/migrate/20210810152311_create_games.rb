@@ -8,4 +8,3 @@ class CreateGames < ActiveRecord::Migration[5.2]
   end
 end
 
-# t.belongs_to :genre, foreign_key: true
