@@ -10,24 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_10_152411) do
-
-  create_table "game_platforms", force: :cascade do |t|
-    t.integer "game_id"
-    t.integer "platform_id"
-  end
+ActiveRecord::Schema.define(version: 2021_08_10_152335) do
 
   create_table "games", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.integer "genre_id"
+    t.index ["genre_id"], name: "index_games_on_genre_id"
   end
 
   create_table "genres", force: :cascade do |t|
-    t.string "name"
-  end
-
-  create_table "platforms", force: :cascade do |t|
     t.string "name"
   end
 

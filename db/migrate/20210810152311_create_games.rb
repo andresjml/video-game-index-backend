@@ -3,7 +3,7 @@ class CreateGames < ActiveRecord::Migration[5.2]
     create_table :games do |t|
       t.string :title
       t.string :description
-      t.integer :genre_id
+      t.belongs_to :genre, foreign_key: true
     end
   end
 end
