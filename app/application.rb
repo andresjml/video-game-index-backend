@@ -12,7 +12,7 @@ class Application
       # Game Index
 
       if req.path == '/games' && req.get?
-        games=Game.all    
+        games=Game.all
         return [
           200, 
           { 'Content-Type' => 'application/json' }, 
@@ -38,14 +38,13 @@ class Application
         id=req.path.split('/')[2]
         game=Game.find_by_id(id)
         if game
-          
+          platforms=game.platforms
           game_resp = {
             id: game.id,
             title: game.title,
             description: game.description,
-            genre_id:game.genre.id,
-            genre_name:game.genre.name
-            
+            genre:game.genre.name,
+            platforms:platforms
           }
           return [
             200, 
@@ -201,7 +200,98 @@ class Application
 
       end
 
-       
+      # PLATFORM RESTful ROUTES
+
+      # Platform Index
+      
+      if req.path == '/platforms' && req.get?
+        platforms=Platform.all
+        return [
+          200, 
+          { 'Content-Type' => 'application/json' }, 
+          [ platforms.to_json ]
+        ] 
+      end
+
+      # Platform Create
+
+      if req.path =='/platforms' && req.post?
+        body=JSON.parse(req.body.read)
+        platform=Platform.create(body)
+        return [
+          201, 
+          { 'Content-Type' => 'application/json' }, 
+          [ platform.to_json ]
+        ] 
+      end
+
+      # Platform Show
+
+      if req.path.match(/platforms/) && req.get?
+        id=req.path.split('/')[2]
+        platform=Platform.find_by_id(id)
+        if platform
+          games=platform.games
+          platform_resp = {
+            name: platform.name,
+            games:games
+          }
+          return [
+            200, 
+            { 'Content-Type' => 'application/json' }, 
+            [ platform_resp.to_json ]
+          ]
+        else
+          return [
+            404, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {error: "Platform not Found"}.to_json ]
+          ]
+        end 
+      end
+
+      # Platform Update
+
+      if req.path.match(/platforms/) && req.patch?
+        id=req.path.split('/')[2]
+        platform=Platform.find_by_id(id)
+        body=JSON.parse(req.body.read)
+        if platform
+          platform.update(body)
+          return [
+            202, 
+            { 'Content-Type' => 'application/json' }, 
+            [ platform.to_json ]
+          ]
+        else
+          return [
+            404, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {error: "Somethig went wrong"}.to_json ]
+          ]
+        end
+      end
+
+      # Platform Destroy
+
+      if req.path.match(/platforms/) && req.delete?
+        id=req.path.split('/')[2]
+        platform=Platform.find_by_id(id)
+        if platform
+          platform.destroy
+          return [
+            200, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {message: "Platform Deleted"}.to_json ]
+          ]
+        else
+          return [
+            404, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {error: "Platform not Found"}.to_json ]
+          ]
+        end
+      end 
 
       #static route to test rack
       if req.path.match(/test/)
