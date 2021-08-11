@@ -38,18 +38,10 @@ class Application
         id=req.path.split('/')[2]
         game=Game.find_by_id(id)
         if game
-          platforms=game.platforms
-          game_resp = {
-            id: game.id,
-            title: game.title,
-            description: game.description,
-            genre:game.genre.name,
-            platforms:platforms
-          }
           return [
             200, 
             { 'Content-Type' => 'application/json' }, 
-            [ game_resp.to_json ]
+            [game.as_json(include: :platforms).to_json]
           ]
         else
           return [
@@ -137,15 +129,10 @@ class Application
         id=req.path.split('/')[2]
         genre=Genre.find_by_id(id)
         if genre
-          games=genre.games
-          genre_resp = {
-            name: genre.name,
-            games:games
-          }
           return [
             200, 
             { 'Content-Type' => 'application/json' }, 
-            [ genre_resp.to_json ]
+            [genre.as_json(include: :games).to_json]
           ]
         else
           return [
@@ -231,15 +218,10 @@ class Application
         id=req.path.split('/')[2]
         platform=Platform.find_by_id(id)
         if platform
-          games=platform.games
-          platform_resp = {
-            name: platform.name,
-            games:games
-          }
           return [
             200, 
             { 'Content-Type' => 'application/json' }, 
-            [ platform_resp.to_json ]
+            [platform.as_json(include: :games).to_json]
           ]
         else
           return [
