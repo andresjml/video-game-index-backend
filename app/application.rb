@@ -275,6 +275,94 @@ class Application
         end
       end 
 
+      # GAMEPLATFORM RESTful ROUTES
+
+      # Platform Index
+      
+      if req.path == '/game_platform' && req.get?
+        gameplatforms=GamePlatform.all
+        return [
+          200, 
+          { 'Content-Type' => 'application/json' }, 
+          [ gameplatforms.to_json ]
+        ] 
+      end
+
+      # Platform Create
+
+      if req.path =='/game_platform' && req.post?
+        body=JSON.parse(req.body.read)
+        gameplatforms=GamePlatform.create(body)
+        return [
+          201, 
+          { 'Content-Type' => 'application/json' }, 
+          [ gameplatforms.to_json ]
+        ] 
+      end
+
+      # Platform Show
+
+      if req.path.match(/game_platform/) && req.get?
+        id=req.path.split('/')[2]
+        gameplatforms=GamePlatform.find_by_id(id)
+        if gameplatforms
+          return [
+            200, 
+            { 'Content-Type' => 'application/json' }, 
+            [gameplatforms.as_json(include: :game).to_json]
+          ]
+        else
+          return [
+            404, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {error: "Game Platforms not Found"}.to_json ]
+          ]
+        end 
+      end
+
+      # Platform Update
+
+      if req.path.match(/game_platform/) && req.patch?
+        id=req.path.split('/')[2]
+        gameplatforms=GamePlatform.find_by_id(id)
+        body=JSON.parse(req.body.read)
+        if gameplatforms
+          gameplatforms.update(body)
+          return [
+            202, 
+            { 'Content-Type' => 'application/json' }, 
+            [ gameplatforms.to_json ]
+          ]
+        else
+          return [
+            404, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {error: "Somethig went wrong"}.to_json ]
+          ]
+        end
+      end
+
+      # Platform Destroy
+
+      if req.path.match(/game_platform/) && req.delete?
+        id=req.path.split('/')[2]
+        gameplatforms=GamePlatform.find_by_id(id)
+        if gameplatforms
+          gameplatforms.destroy
+          return [
+            200, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {message: "Game Platforms Deleted"}.to_json ]
+          ]
+        else
+          return [
+            404, 
+            { 'Content-Type' => 'application/json' }, 
+            [ {error: "Game Platforms not Found"}.to_json ]
+          ]
+        end
+      end 
+
       #static route to test rack
       if req.path.match(/test/)
         return [200, {'Content-Type'=> 'application/json'}, [{message: "Test Response!"}.to_json]]
