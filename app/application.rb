@@ -277,7 +277,7 @@ class Application
 
       # GAMEPLATFORM RESTful ROUTES
 
-      # Platform Index
+      # GamePlatform Index
       
       if req.path == '/game_platform' && req.get?
         gameplatforms=GamePlatform.all
@@ -288,7 +288,7 @@ class Application
         ] 
       end
 
-      # Platform Create
+      # GamePlatform Create
 
       if req.path =='/game_platform' && req.post?
         body=JSON.parse(req.body.read)
@@ -300,7 +300,7 @@ class Application
         ] 
       end
 
-      # Platform Show
+      # GamePlatform Show
 
       if req.path.match(/game_platform/) && req.get?
         id=req.path.split('/')[2]
@@ -320,7 +320,7 @@ class Application
         end 
       end
 
-      # Platform Update
+      # GamePlatform Update
 
       if req.path.match(/game_platform/) && req.patch?
         id=req.path.split('/')[2]
@@ -342,7 +342,7 @@ class Application
         end
       end
 
-      # Platform Destroy
+      # GamePlatform Destroy
 
       if req.path.match(/game_platform/) && req.delete?
         id=req.path.split('/')[2]
