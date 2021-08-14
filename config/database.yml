@@ -1,5 +1,7 @@
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  database: index_app_development
   pool: 5
   timeout: 5000
+  username: postgres
+  password: test

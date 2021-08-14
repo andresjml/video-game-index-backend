@@ -24,6 +24,7 @@ GEM
     minitest (5.14.4)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    pg (1.2.3)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -71,6 +72,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 5.2)
   faker
+  pg
   pry
   rack
   rack-cors
