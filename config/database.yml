@@ -6,3 +6,9 @@ development:
   username: postgres
   password: test
   
+production:
+  adapter: postgresql
+  database: index_app_production
+  pool: 5
+  timeout: 5000
+  
